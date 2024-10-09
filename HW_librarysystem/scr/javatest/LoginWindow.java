@@ -123,7 +123,7 @@ public class LoginWindow {
     }
 
     public static void saveUserDataToFile() {
-        try (FileWriter fw = new FileWriter("HW_librarysystem/javatest/users.txt", false);
+        try (FileWriter fw = new FileWriter("HW_librarysystem/users.txt", false);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
             for (String[] user : users) {
