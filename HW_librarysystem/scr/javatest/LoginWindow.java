@@ -69,14 +69,16 @@ public class LoginWindow {
     }
 
     public static void loadUserData() {
-        try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] user = line.split(",");
-                users.add(user);
-            }
+        File userFile = new File("HW_librarysystem/users.txt");
+
+         try (BufferedReader br = new BufferedReader(new FileReader(userFile))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] user = line.split(",");
+            users.add(user);
+        }
         } catch (IOException e) {
-            System.out.println("No user data found. Starting with an empty user list.");
+        System.out.println("No user data found. Starting with an empty user list.");
         }
     }
     
@@ -121,7 +123,7 @@ public class LoginWindow {
     }
 
     public static void saveUserDataToFile() {
-        try (FileWriter fw = new FileWriter("users.txt", false);
+        try (FileWriter fw = new FileWriter("HW_librarysystem/javatest/users.txt", false);
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
             for (String[] user : users) {
