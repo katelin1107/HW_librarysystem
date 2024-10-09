@@ -12,10 +12,11 @@ import java.util.Date;
 public class LoginWindow {
 
     private static ArrayList<String[]> users = new ArrayList<>();
+    private static ArrayList<Book> books = new ArrayList<>(); // 存儲書籍列表
 
     public static void main(String[] args) {
-        // 從文件加載用戶數據
         loadUserData();
+        loadBookData(); // 載入書籍資料
 
         JFrame frame = new JFrame("Login Window");
         frame.setSize(400, 250);
@@ -38,8 +39,7 @@ public class LoginWindow {
         JButton registerButton = new JButton("Register");
         frame.add(registerButton);
 
-        // 登入按鈕的事件處理
-        loginButton.addActionListener(new ActionListener() {
+         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = userText.getText();
@@ -47,7 +47,8 @@ public class LoginWindow {
 
                 if (validateLogin(username, password)) {
                     updateLastLoginTime(username);
-                    JOptionPane.showMessageDialog(frame, "Login Successful!");
+                    
+                    new BorrowBookWindow(books, username); // 登入成功後開啟借書視窗
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid username or password");
                 }
@@ -61,11 +62,6 @@ public class LoginWindow {
                 // 開啟註冊視窗
                 new RegisterWindow(users);
                 
-                // 註冊後立即檢查用戶列表
-                System.out.println("Current users:");
-                for (String[] user : users) {
-                    System.out.println("Phone: " + user[0] + ", Username: " + user[1]);
-                }
             }
         });
 
@@ -83,6 +79,25 @@ public class LoginWindow {
             System.out.println("No user data found. Starting with an empty user list.");
         }
     }
+    
+    public static void loadBookData() {
+        // 在這裡可以從文件或其他來源加載書籍資料
+        books.add(new Book("摺紙新玩法開店遊戲超有趣!", "石川真理子/楊鴻儒", "9789866180514", true));
+        books.add(new Book("神奇收納小撇步", "永井一夫", "9575265998", true));
+        books.add(new Book("美味早午餐!", "張炳賢", "9789867502254", true));
+        books.add(new Book("親子運動，提升學習力!", "柳澤秋孝/羅婷婷", "9789867167781", true));
+        books.add(new Book("氣球造型變變變!", "李起泰", "9867171055", true));
+        books.add(new Book("家事生活智慧通", "藤岡真澄", "9575265955", true));
+        books.add(new Book("木偶奇遇記", "科洛迪/嶺月", "9576320763", true));
+        books.add(new Book("家庭托嬰高手", "施以恩", "9576592542", true));
+        books.add(new Book("會說話的骨笛", "李顯鳳", "9577752071", true));
+        books.add(new Book("夢幻大飛行", "威斯納", "9573211963", true));
+
+
+        
+        // 添加更多書籍...
+    }
+
 
     public static boolean validateLogin(String username, String password) {
         String hashedPassword = hashPassword(password);
